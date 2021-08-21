@@ -402,14 +402,6 @@ class Player(xbmc.Player):
                 if int(item['CurrentPosition']) == 1:
                     item['CurrentPosition'] = int(item['Runtime'])
 
-            data = {
-                'ItemId': item['Id'],
-                'MediaSourceId': item['MediaSourceId'],
-                'PositionTicks': int(item['CurrentPosition'] * 10000000),
-                'PlaySessionId': item['PlaySessionId']
-            }
-            item['Server'].jellyfin.session_stop(data)
-
             if item.get('LiveStreamId'):
 
                 LOG.info("<[ livestream/%s ]", item['LiveStreamId'])
@@ -419,6 +411,14 @@ class Player(xbmc.Player):
 
                 LOG.info("<[ transcode/%s ]", item['Id'])
                 item['Server'].jellyfin.close_transcode(item['DeviceId'], item['PlaySessionId'])
+
+            data = {
+                'ItemId': item['Id'],
+                'MediaSourceId': item['MediaSourceId'],
+                'PositionTicks': int(item['CurrentPosition'] * 10000000),
+                'PlaySessionId': item['PlaySessionId']
+            }
+            item['Server'].jellyfin.session_stop(data)
 
             path = xbmc.translatePath("special://profile/addon_data/plugin.video.jellyfin/temp/")
 
