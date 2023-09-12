@@ -397,10 +397,6 @@ class Actions(object):
             listitem.setProperty('IsFolder', 'true')
 
         elif obj['Type'] == 'Series':
-
-            if obj['Status'] != 'Ended':
-                obj['Status'] = None
-
             metadata.update({
                 'mediatype': "tvshow",
                 'tvshowtitle': obj['Title'],
